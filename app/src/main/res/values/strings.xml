@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">HW2.0</string>
+    <string name="sharedPreference" translatable="false">com.example.hw20</string>
+</resources>
