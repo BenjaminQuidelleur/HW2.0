@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hw20.R
 import com.example.hw20.model.Reminder
 import kotlinx.android.synthetic.main.custom_row.view.*
+import kotlinx.android.synthetic.main.fragment_add.*
+import kotlinx.android.synthetic.main.fragment_add.view.*
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
@@ -25,11 +27,11 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = reminderList[position]
-        holder.itemView.id_txt.text = currentItem.id.toString()
+        //holder.itemView.id_txt.text = currentItem.id.toString()
         holder.itemView.message_txt.text = currentItem.message
         holder.itemView.date_txt.text = currentItem.reminderDate
         holder.itemView.time_txt.text = currentItem.reminderTime
-        //holder.itemView.age_txt.text = currentItem.age.toString()
+        //holder.itemView.id_icon.id = currentItem.iconId
 
         holder.itemView.rowLayout.setOnClickListener{
             val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)

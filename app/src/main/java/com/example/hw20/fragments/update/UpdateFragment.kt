@@ -1,10 +1,15 @@
 package com.example.hw20.fragments.update
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextUtils
 import android.view.*
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +18,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.hw20.R
 import com.example.hw20.model.Reminder
 import com.example.hw20.viewmodel.ReminderViewModel
+import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 
@@ -27,6 +33,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class UpdateFragment : Fragment() {
+
+    var speachButton: ImageView? = null
+    var speachText: EditText? = null
+
+    private val RECOGNIZER_RESULT = 1
 
 
     private val args by navArgs<UpdateFragmentArgs>()
@@ -55,10 +66,33 @@ class UpdateFragment : Fragment() {
         return view
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        speachButton = btn_mic2
+        speachText = updateMessage_et
+
+        speachButton!!.setOnClickListener {
+            val speachIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            speachIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            speachIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speech to text")
+            startActivityForResult(speachIntent, RECOGNIZER_RESULT)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RECOGNIZER_RESULT && resultCode == Activity.RESULT_OK) {
+            val matches = data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            speachText!!.setText(matches!![0].toString())
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
     private fun updateItem(){
         val message = updateMessage_et.text.toString()
         val reminderDate = updateDate_et.text.toString()
         val reminderTime = updateTime_et.text.toString()
+        //val iconId = updateIcon_et.selectedItemId
         //val age = Integer.parseInt(updateAge_et.text.toString())
 
         if(inputCheck(message, reminderDate, reminderTime)){

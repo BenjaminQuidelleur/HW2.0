@@ -9,6 +9,7 @@ import com.example.hw20.model.Reminder
 @Database(entities = [Reminder::class], version = 2, exportSchema = false)
 abstract class ReminderDatabase: RoomDatabase(){
 
+
     abstract fun reminderDao(): ReminderDao
 
     companion object{

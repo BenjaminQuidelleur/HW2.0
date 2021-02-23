@@ -3,6 +3,7 @@ package com.example.hw20
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController

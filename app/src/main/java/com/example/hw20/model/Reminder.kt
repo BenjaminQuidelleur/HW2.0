@@ -17,7 +17,7 @@ data class Reminder (
     val message: String,
     //val lastName: String,
     //val age: Int
-
+    //val iconId: Int,
     //val location_x: Float,
     //val location_y: Float,
     val reminderDate: String,
