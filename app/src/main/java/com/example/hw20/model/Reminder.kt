@@ -21,10 +21,10 @@ data class Reminder (
     //val location_x: Float,
     //val location_y: Float,
     val reminderDate: String,
-    val reminderTime: String
+    //val reminderTime: String,
 
     //val creation_time: Date,
-    //val reminder_seen: Boolean
+    val reminder_seen: Boolean
     //creator_id: Int
 
 

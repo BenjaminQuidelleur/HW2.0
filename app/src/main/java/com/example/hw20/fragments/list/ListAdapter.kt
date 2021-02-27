@@ -30,7 +30,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         //holder.itemView.id_txt.text = currentItem.id.toString()
         holder.itemView.message_txt.text = currentItem.message
         holder.itemView.date_txt.text = currentItem.reminderDate
-        holder.itemView.time_txt.text = currentItem.reminderTime
+        //holder.itemView.time_txt.text = currentItem.reminderTime
         //holder.itemView.id_icon.id = currentItem.iconId
 
         holder.itemView.rowLayout.setOnClickListener{

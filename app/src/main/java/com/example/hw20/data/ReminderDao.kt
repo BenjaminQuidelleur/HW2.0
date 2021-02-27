@@ -23,5 +23,7 @@ interface ReminderDao {
     fun readAllData(): LiveData<List<Reminder>>
 
 
+    @Query("SELECT * FROM reminder_table WHERE reminder_seen=1 ORDER BY id ASC")
+    fun readReminderSeen(): LiveData<List<Reminder>>
 
 }

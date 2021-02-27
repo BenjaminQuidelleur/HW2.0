@@ -7,6 +7,8 @@ import com.example.hw20.model.Reminder
 class ReminderRepository(private val reminderDao: ReminderDao) {
     val readAllData: LiveData<List<Reminder>> = reminderDao.readAllData()
 
+    val readReminders: LiveData<List<Reminder>> = reminderDao.readReminderSeen()
+
     suspend fun addReminder(reminder: Reminder){
         reminderDao.addReminder(reminder)
     }
@@ -22,5 +24,7 @@ class ReminderRepository(private val reminderDao: ReminderDao) {
     suspend fun deleteAllReminders(){
         reminderDao.deleteAllReminders()
     }
+
+
 
 }

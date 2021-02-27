@@ -15,12 +15,15 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.hw20.MainActivity
 import com.example.hw20.R
+import com.example.hw20.fragments.add.AddFragment
 import com.example.hw20.model.Reminder
 import com.example.hw20.viewmodel.ReminderViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,7 +58,7 @@ class UpdateFragment : Fragment() {
 
         view.updateMessage_et.setText(args.currentReminder.message)
         view.updateDate_et.setText(args.currentReminder.reminderDate)
-        view.updateTime_et.setText(args.currentReminder.reminderTime)
+        //view.updateTime_et.setText(args.currentReminder.reminderTime)
 
         view.update_btn.setOnClickListener{
             updateItem()
@@ -92,17 +95,38 @@ class UpdateFragment : Fragment() {
         val message = updateMessage_et.text.toString()
         val reminderDate = updateDate_et.text.toString()
         val reminderTime = updateTime_et.text.toString()
+        //val reminder_seen = false
         //val iconId = updateIcon_et.selectedItemId
         //val age = Integer.parseInt(updateAge_et.text.toString())
 
         if(inputCheck(message, reminderDate, reminderTime)){
             //create reminder object
 
-            val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate, reminderTime)
+            val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate,false)
+
+            val reminderDate2 = updateDate_et.text.split(".").toTypedArray()
+
+
+            val currentReminderdate = GregorianCalendar(
+                    reminderDate2[2].toInt(),
+                    reminderDate2[1].toInt() - 1,
+                    reminderDate2[0].toInt()
+            )
+
+
 
             //Update Current Reminder
             mReminderViewModel.updateReminder(updatedReminder)
             Toast.makeText(requireContext(), "Updated Successfully!", Toast.LENGTH_SHORT).show()
+
+            /*//add notification
+            AddFragment.setRemnder(
+                    requireContext(),
+                    id,
+                    currentReminderdate.timeInMillis,
+                    message
+            )*/
+
             //Navigate back
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
 
