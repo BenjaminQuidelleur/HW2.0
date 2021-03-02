@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.hw20.model.Reminder
 
-@Database(entities = [Reminder::class], version = 7, exportSchema = false)
+@Database(entities = [Reminder::class], version = 9, exportSchema = false)
 abstract class ReminderDatabase: RoomDatabase(){
 
 

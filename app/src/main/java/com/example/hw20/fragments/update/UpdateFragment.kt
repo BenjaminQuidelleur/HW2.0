@@ -134,6 +134,8 @@ class UpdateFragment : Fragment(),DatePickerDialog.OnDateSetListener,
             )
 
 
+
+
             val paymentCalender = GregorianCalendar.getInstance()
             val dateFormat = "dd.MM.yyyy HH:mm" // change this format to dd.MM.yyyy if you have not time in your date.
             // a better way of handling dates but requires API version 26 (Build.VERSION_CODES.O)
@@ -174,23 +176,36 @@ class UpdateFragment : Fragment(),DatePickerDialog.OnDateSetListener,
 
 
 
+            lifecycleScope.launch{
+
+
+
 
                 val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate,false)
-                //val reminderId = mReminderViewModel.updateReminder(updatedReminder).toInt()
+                val reminderId = mReminderViewModel.updateReminder(updatedReminder).toInt()
 
                 Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_LONG).show()
 
 
-/*
+
                 MainActivity.setReminderWithWorkManager(
-                        requireContext(),
-                        reminderId,
-                        paymentCalender.timeInMillis,
-                        message
+                    requireContext(),
+                    reminderId,
+                    paymentCalender.timeInMillis,
+                    message
 
                 )
-*/
+
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+                //findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+
+
+            }
+
+
+
+
+
 
 
            /* val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate,false)

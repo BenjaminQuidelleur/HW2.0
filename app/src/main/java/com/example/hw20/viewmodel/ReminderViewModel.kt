@@ -47,8 +47,11 @@ class ReminderViewModel(application: Application): AndroidViewModel(application)
         }
     }
 
-    fun updateReminder(reminder: Reminder){
-        viewModelScope.launch(Dispatchers.IO){
+    suspend fun updateReminder(reminder: Reminder): Int{
+        /*viewModelScope.launch(Dispatchers.IO){
+            repository.updateReminder(reminder)
+        }*/
+        return withContext(Dispatchers.IO){
             repository.updateReminder(reminder)
         }
 
@@ -66,6 +69,11 @@ class ReminderViewModel(application: Application): AndroidViewModel(application)
         }
     }
 
+    fun updateReminderSeen(reminderId: Int, seen: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateReminderSeen(reminderId, seen)
+        }
+    }
 
 
 }

@@ -10,7 +10,7 @@ interface ReminderDao {
     suspend fun addReminder(reminder: Reminder):Long
 
     @Update
-    fun updateReminder(reminder: Reminder)
+    fun updateReminder(reminder: Reminder): Int
 
     @Delete
     suspend fun deleteReminder(reminder: Reminder)
