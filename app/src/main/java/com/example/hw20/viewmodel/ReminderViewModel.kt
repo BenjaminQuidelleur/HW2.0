@@ -4,16 +4,22 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import com.example.hw20.ReminderWorker
 import com.example.hw20.data.ReminderDatabase
 import com.example.hw20.repository.ReminderRepository
 import com.example.hw20.model.Reminder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ReminderViewModel(application: Application): AndroidViewModel(application) {
 
     val readAllData: LiveData<List<Reminder>>
-    //val readReminders: LiveData<List<Reminder>>
+
+    val readReminders: LiveData<List<Reminder>>
     private val repository: ReminderRepository
 
     init {
@@ -21,15 +27,22 @@ class ReminderViewModel(application: Application): AndroidViewModel(application)
             application
         ).reminderDao()
         repository = ReminderRepository(reminderDao)
+        readReminders = repository.readReminders
         readAllData = repository.readAllData
+
     }
 
-    /*fun displayall(){
-        readAllData = repository.readAllData
-    }*/
-
-    fun addReminder(reminder: Reminder){
+   fun displayAll() {
         viewModelScope.launch(Dispatchers.IO) {
+           repository.displayAll()
+        }
+    }
+
+    suspend fun addReminder(reminder: Reminder):Long{
+       /* viewModelScope.launch(Dispatchers.IO) {
+            repository.addReminder(reminder)
+        }*/
+        return withContext(Dispatchers.IO){
             repository.addReminder(reminder)
         }
     }
@@ -38,6 +51,7 @@ class ReminderViewModel(application: Application): AndroidViewModel(application)
         viewModelScope.launch(Dispatchers.IO){
             repository.updateReminder(reminder)
         }
+
     }
 
     fun deleteReminder(reminder: Reminder){
@@ -51,5 +65,7 @@ class ReminderViewModel(application: Application): AndroidViewModel(application)
             repository.deleteAllReminders()
         }
     }
+
+
 
 }

@@ -1,9 +1,7 @@
 package com.example.hw20.fragments.add
 
 import android.app.*
-import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.speech.RecognizerIntent
@@ -13,30 +11,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.example.hw20.MainActivity
 import com.example.hw20.R
-import com.example.hw20.ReminderReceiver
-import com.example.hw20.ReminderWorker
-import com.example.hw20.MainActivity.Companion.setReminderWithWorkManager
-import com.example.hw20.MainActivity.Companion.setRemnder
 import com.example.hw20.model.Reminder
 import com.example.hw20.viewmodel.ReminderViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
-import kotlinx.android.synthetic.main.fragment_add.view.*
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.random.Random
 
 //import kotlin.random.Random.Default.Companion
 
@@ -127,9 +115,7 @@ TimePickerDialog.OnTimeSetListener {
             val reminder = Reminder(
                     0,
                     message,
-                    //iconId.toInt(),
                     reminderDate,
-                    //reminderTime,
                     reminder_seen = false
 
             )
@@ -173,20 +159,33 @@ TimePickerDialog.OnTimeSetListener {
 
             }
 
-            mReminderViewModel.addReminder(reminder)
-            Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG).show()
+            lifecycleScope.launch{
+
+
+                val reminderId = mReminderViewModel.addReminder(reminder).toInt()
+
+                Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG).show()
+
 
 
                 MainActivity.setReminderWithWorkManager(
                         requireContext(),
-                        id,
+                        reminderId,
                         paymentCalender.timeInMillis,
                         message
+
                 )
 
+                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+
+            }
 
 
-            findNavController().navigate(R.id.action_addFragment_to_listFragment)
+
+
+
+
+
 
         }
     }

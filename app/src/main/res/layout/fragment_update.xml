@@ -23,11 +23,11 @@
         android:id="@+id/update_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="80dp"
         android:text="Update"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateTime_et" />
+        app:layout_constraintTop_toBottomOf="@+id/updateDate_et" />
 
     <EditText
         android:id="@+id/updateDate_et"
@@ -40,18 +40,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateMessage_et" />
-
-    <EditText
-        android:id="@+id/updateTime_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="time"
-        android:hint="hh:mm:ss"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateDate_et" />
 
     <ImageView
         android:id="@+id/btn_mic2"

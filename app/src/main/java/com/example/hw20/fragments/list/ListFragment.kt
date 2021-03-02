@@ -1,33 +1,23 @@
 package com.example.hw20.fragments.list
 
 import android.app.*
-import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.example.hw20.R
-import com.example.hw20.ReminderReceiver
-import com.example.hw20.ReminderWorker
 import com.example.hw20.viewmodel.ReminderViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
-import java.util.concurrent.TimeUnit
-import kotlin.random.Random
 
 
 class ListFragment : Fragment() {
 
     private lateinit var mReminderViewModel: ReminderViewModel
+    val adapter = ListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +27,14 @@ class ListFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_list, container, false)
 
         //Recyclerview
-        val adapter = ListAdapter()
+        //val adapter = ListAdapter()
         val recyclerView = view.recyclerview
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         //ReminderViewModel
         mReminderViewModel = ViewModelProvider(this).get(ReminderViewModel::class.java)
-        mReminderViewModel.readAllData.observe(viewLifecycleOwner, Observer { reminder ->
+        mReminderViewModel.readReminders.observe(viewLifecycleOwner, Observer { reminder ->
             adapter.setData(reminder) })
 
         view.floatingActionButton.setOnClickListener{
@@ -62,9 +52,9 @@ class ListFragment : Fragment() {
         if(item.itemId == R.id.menu_delete){
             deleteAllReminders()
         }
-        /*if(item.itemId == R.id.menu_display){
-            displayallData()
-        }*/
+        if(item.itemId == R.id.menu_display) {
+            displayAllreminders()
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -80,10 +70,13 @@ class ListFragment : Fragment() {
         builder.create().show()
     }
 
-    /*private fun displayallData(){
-        mReminderViewModel.displayall()
+    private fun displayAllreminders(){
+        mReminderViewModel.readAllData.observe(viewLifecycleOwner, Observer { reminder ->
+            adapter.setData(reminder) })
     }
-*/
+
+
+
 
 
 

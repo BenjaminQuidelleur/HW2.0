@@ -9,11 +9,11 @@ class ReminderRepository(private val reminderDao: ReminderDao) {
 
     val readReminders: LiveData<List<Reminder>> = reminderDao.readReminderSeen()
 
-    suspend fun addReminder(reminder: Reminder){
-        reminderDao.addReminder(reminder)
+    suspend fun addReminder(reminder: Reminder):Long {
+        return reminderDao.addReminder(reminder)
     }
 
-    suspend fun updateReminder(reminder: Reminder){
+    fun updateReminder(reminder: Reminder){
         reminderDao.updateReminder(reminder)
     }
 
@@ -25,6 +25,14 @@ class ReminderRepository(private val reminderDao: ReminderDao) {
         reminderDao.deleteAllReminders()
     }
 
+    fun displayAll(){
+        reminderDao.readAllData()
+    }
+
+
+    fun updateReminderSeen(reminderId: Int, seen: Boolean){
+        reminderDao.updateReminderSeen(reminderId, seen)
+    }
 
 
 }

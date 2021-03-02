@@ -1,5 +1,6 @@
 package com.example.hw20
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,24 +13,35 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.widget.Button
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.room.RoomDatabase
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.hw20.data.ReminderDatabase
+import com.example.hw20.fragments.update.UpdateFragmentArgs
+import com.example.hw20.model.Reminder
+import com.example.hw20.viewmodel.ReminderViewModel
 
 class MainActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
+
         setupActionBarWithNavController(findNavController(R.id.fragment3))
 
-        }
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fragment3)
@@ -38,18 +50,20 @@ class MainActivity : AppCompatActivity() {
 
 
     companion object {
-        //val paymenthistoryList = mutableListOf<PaymentInfo>()
 
+
+        @SuppressLint("ServiceCast")
         fun showNofitication(context: Context, message: String) {
+
 
             val CHANNEL_ID = "REMINDER_APP_NOTIFICATION_CHANNEL"
             var notificationId = Random.nextInt(10, 1000) + 5
             // notificationId += Random(notificationId).nextInt(1, 500)
 
-            /*val notifyIntent = Intent(context, MainActivity::class.java)
+            val notifyIntent = Intent(context, MainActivity::class.java)
             val notifyPendingIntent = PendingIntent.getActivity(
                     context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
-            )*/
+            )
 
             var notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.baseline_circle_notifications_24)
@@ -58,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                     .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setGroup(CHANNEL_ID)
-            //.setContentIntent(notifyPendingIntent)
+                    .setContentIntent(notifyPendingIntent)
 
             val notificationManager =
                     context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -75,21 +89,27 @@ class MainActivity : AppCompatActivity() {
                 notificationManager.createNotificationChannel(channel)
             }
 
+            //ReminderDatabase.getDatabase(context).reminderDao().updateReminder(reminder)
             notificationManager.notify(notificationId, notificationBuilder.build())
+
+
 
         }
 
-
+        @SuppressLint("RestrictedApi")
         fun setReminderWithWorkManager(
                 context: Context,
-                uid: Int,
+                reminderId: Int,
                 timeInMillis: Long,
                 message: String
+
+
+
         ) {
 
             val reminderParameters = Data.Builder()
                     .putString("message", message)
-                    .putInt("uid", uid)
+                    .putInt("reminderId", reminderId)
                     .build()
 
             // get minutes from now until reminder
@@ -103,9 +123,11 @@ class MainActivity : AppCompatActivity() {
                     .build()
 
             WorkManager.getInstance(context).enqueue(reminderRequest)
+
+
         }
 
-        fun setRemnder(context: Context, uid: Int, timeInMillis: Long, message: String) {
+        /*fun setRemnder(context: Context, uid: Int, timeInMillis: Long, message: String) {
             val intent = Intent(context, ReminderReceiver::class.java)
             intent.putExtra("uid", uid)
             intent.putExtra("message", message)
@@ -132,5 +154,8 @@ class MainActivity : AppCompatActivity() {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(pendingIntent)
         }
+    }*/
+
     }
-    }
+
+}

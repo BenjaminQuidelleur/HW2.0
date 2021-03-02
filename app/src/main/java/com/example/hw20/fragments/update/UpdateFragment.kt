@@ -15,6 +15,7 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.hw20.MainActivity
@@ -25,6 +26,7 @@ import com.example.hw20.viewmodel.ReminderViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -170,22 +172,45 @@ class UpdateFragment : Fragment(),DatePickerDialog.OnDateSetListener,
 
             }
 
-            val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate,false)
-
-            mReminderViewModel.updateReminder(updatedReminder)
-            Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_LONG).show()
 
 
-            MainActivity.setReminderWithWorkManager(
+
+                val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate,false)
+                //val reminderId = mReminderViewModel.updateReminder(updatedReminder).toInt()
+
+                Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_LONG).show()
+
+
+/*
+                MainActivity.setReminderWithWorkManager(
+                        requireContext(),
+                        reminderId,
+                        paymentCalender.timeInMillis,
+                        message
+
+                )
+*/
+                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+
+
+           /* val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate,false)
+
+            mReminderViewModel.updateReminder(updatedReminder)*/
+
+
+
+            //val reminderId = args.currentReminder.id
+            /*MainActivity.setReminderWithWorkManager(
                     requireContext(),
                     id,
                     paymentCalender.timeInMillis,
-                    message
-            )
+                    message,
+                    reminderId
+            )*/
 
 
 
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            //findNavController().navigate(R.id.action_updateFragment_to_listFragment)
 
         }
     }
