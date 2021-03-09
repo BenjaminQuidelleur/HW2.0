@@ -70,7 +70,8 @@ class UserLocation : AppCompatActivity(), OnMapReadyCallback {
         if (!isLocationPermissionGranted()) {
             val permissions = mutableListOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+
             )
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)

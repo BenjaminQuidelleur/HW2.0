@@ -19,14 +19,14 @@ data class Reminder (
     //val age: Int
     //val iconId: Int,
 
-        val reminderDate: String,
+        val reminderDate: String= "",
     //val reminderTime: String,
 
     //val creation_time: Date,
         var reminder_seen: Boolean,
     //creator_id: Int
-        var location_x: String,
-        var location_y: String
+        var location_x: String ="",
+        var location_y: String =""
 
 
 ): Parcelable
