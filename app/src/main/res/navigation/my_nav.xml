@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_listFragment_to_updateFragment"
             app:destination="@id/updateFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_mapsActivity"
+            app:destination="@id/mapsActivity" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -25,6 +28,9 @@
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_addFragment_to_mapsActivity"
+            app:destination="@id/mapsActivity" />
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
@@ -38,4 +44,10 @@
             android:name="currentReminder"
             app:argType="com.example.hw20.model.Reminder" />
     </fragment>
+    <activity
+        android:id="@+id/mapsActivity"
+        android:name="com.example.hw20.MapsActivity"
+        android:label="activity_maps"
+        tools:layout="@layout/activity_maps"/>
+
 </navigation>

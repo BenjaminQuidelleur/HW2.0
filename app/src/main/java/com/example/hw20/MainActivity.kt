@@ -29,6 +29,7 @@ import com.example.hw20.data.ReminderDatabase
 import com.example.hw20.fragments.update.UpdateFragmentArgs
 import com.example.hw20.model.Reminder
 import com.example.hw20.viewmodel.ReminderViewModel
+import kotlinx.android.synthetic.main.fragment_add.*
 
 class MainActivity : AppCompatActivity() {
 

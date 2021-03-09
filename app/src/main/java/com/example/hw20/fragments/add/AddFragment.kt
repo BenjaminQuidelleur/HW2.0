@@ -1,6 +1,7 @@
 package com.example.hw20.fragments.add
 
 import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.hw20.MainActivity
+import com.example.hw20.MapsActivity
 import com.example.hw20.R
 import com.example.hw20.model.Reminder
 import com.example.hw20.viewmodel.ReminderViewModel
@@ -25,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 //import kotlin.random.Random.Default.Companion
 
@@ -36,6 +39,9 @@ TimePickerDialog.OnTimeSetListener {
     var speachButton: ImageView? = null
     var speachText: EditText? = null
 
+    lateinit var locationX: String
+    lateinit var locationY: String
+
     private val RECOGNIZER_RESULT = 1
 
     private lateinit var reminderCalender: Calendar
@@ -43,12 +49,26 @@ TimePickerDialog.OnTimeSetListener {
 
     private lateinit var mReminderViewModel: ReminderViewModel
 
+    //var edittext: EditText? = null
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+
+
+
+
+
+        //val locationX = requireActivity().intent.getStringExtra("locationX")
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add, container, false)
+
+
+
+        //edittext = view.findViewById(R.id.addLocationX) as EditText
+        //edittext!!.setText(locationX)
 
 
 
@@ -72,6 +92,7 @@ TimePickerDialog.OnTimeSetListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         speachButton = btn_mic
         speachText = addMessage_et
+
 
         speachButton!!.setOnClickListener {
             val speachIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -97,6 +118,17 @@ TimePickerDialog.OnTimeSetListener {
             ).show()
         }
 
+        addLocationX.setOnClickListener{
+            val intent = Intent(requireContext(), MapsActivity::class.java)
+            startActivityForResult(intent, 1)
+
+        }
+
+
+
+
+
+
 
         add_btn.setOnClickListener {
             //validate entry values here
@@ -109,14 +141,20 @@ TimePickerDialog.OnTimeSetListener {
                 return@setOnClickListener
             }
 
+
+
             val message = addMessage_et.text.toString()
             val reminderDate = addDate_et.text.toString()
+            val locationx = addLocationX.text.toString()
+            val locationy = addLocationY.text.toString()
 
             val reminder = Reminder(
                     0,
                     message,
                     reminderDate,
-                    reminder_seen = false
+                    reminder_seen = false,
+                    locationx,
+                    locationy
 
             )
 
@@ -191,13 +229,29 @@ TimePickerDialog.OnTimeSetListener {
     }
 
 
+
+
          override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
             if (requestCode == RECOGNIZER_RESULT && resultCode == Activity.RESULT_OK) {
                 val matches = data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                 speachText!!.setText(matches!![0].toString())
             }
+
+
+
+                 addLocationX.setText((data!!.getDoubleExtra("lat", 0.0)).toString())
+                 addLocationY.setText((data!!.getDoubleExtra("long", 0.0)).toString())
+
+
+
+
             super.onActivityResult(requestCode, resultCode, data)
         }
+
+
+
+
+
 /*
     private fun insertDataToDatabase(){
         val message = addMessage_et.text.toString()

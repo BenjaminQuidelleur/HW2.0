@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "285749932973",
+    "project_id": "hw20-3c590",
+    "firebase_url": "https://hw20-3c590-default-rtdb.firebaseio.com/",
+    "storage_bucket": "hw20-3c590.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285749932973:android:56e2952a8fac6f1b65e724",
+        "android_client_info": {
+          "package_name": "com.example.hw20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285749932973-f829bm6bbe7m1pj5535d6rjcq6r9mbvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCETxc2wSIpOpmP40yRaZ-Tfkal740en9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285749932973-f829bm6bbe7m1pj5535d6rjcq6r9mbvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

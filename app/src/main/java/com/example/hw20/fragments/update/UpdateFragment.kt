@@ -129,7 +129,9 @@ class UpdateFragment : Fragment(),DatePickerDialog.OnDateSetListener,
                     //iconId.toInt(),
                     reminderDate,
                     //reminderTime,
-                    reminder_seen = false
+                    reminder_seen = false,
+                "0.0",
+                "0.0"
 
             )
 
@@ -181,7 +183,7 @@ class UpdateFragment : Fragment(),DatePickerDialog.OnDateSetListener,
 
 
 
-                val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate,false)
+                val updatedReminder = Reminder(args.currentReminder.id, message, reminderDate,false,"0.0","0.0")
                 val reminderId = mReminderViewModel.updateReminder(updatedReminder).toInt()
 
                 Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_LONG).show()

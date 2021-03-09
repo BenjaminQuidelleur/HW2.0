@@ -4,10 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import com.example.hw20.ReminderWorker
 import com.example.hw20.data.ReminderDatabase
 import com.example.hw20.repository.ReminderRepository
 import com.example.hw20.model.Reminder
@@ -23,9 +19,7 @@ class ReminderViewModel(application: Application): AndroidViewModel(application)
     private val repository: ReminderRepository
 
     init {
-        val reminderDao = ReminderDatabase.getDatabase(
-            application
-        ).reminderDao()
+        val reminderDao = ReminderDatabase.getDatabase(application).reminderDao()
         repository = ReminderRepository(reminderDao)
         readReminders = repository.readReminders
         readAllData = repository.readAllData

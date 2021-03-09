@@ -2,18 +2,10 @@ package com.example.hw20
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.hw20.data.ReminderDatabase
-import com.example.hw20.model.Reminder
-import com.example.hw20.fragments.add.AddFragment
-import com.example.hw20.fragments.list.ListFragment
 import com.example.hw20.repository.ReminderRepository
-import com.example.hw20.viewmodel.ReminderViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class ReminderWorker(appContext:Context, workerParameters: WorkerParameters) :
         Worker(appContext,workerParameters) {

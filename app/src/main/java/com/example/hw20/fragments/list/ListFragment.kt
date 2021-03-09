@@ -1,6 +1,7 @@
 package com.example.hw20.fragments.list
 
 import android.app.*
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -9,7 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.hw20.MainActivity
+import com.example.hw20.MapsActivity
 import com.example.hw20.R
+import com.example.hw20.UserLocation
 import com.example.hw20.viewmodel.ReminderViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
@@ -54,6 +58,11 @@ class ListFragment : Fragment() {
         }
         if(item.itemId == R.id.menu_display) {
             displayAllreminders()
+        }
+        if(item.itemId == R.id.menu_map){
+            //findNavController().navigate(R.id.action_listFragment_to_mapsActivity)
+            val intent = Intent(requireContext(), UserLocation::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }
